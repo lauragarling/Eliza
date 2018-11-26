@@ -1,11 +1,44 @@
-// TODO file header
-// https://docs.oracle.com/javase/8/docs/api/java/lang/Character.html#isLetterOrDigit-char-
-// https://docs.oracle.com/javase/8/docs/api/java/lang/String.html ---- .replaceAll
+//////////////////// ALL ASSIGNMENTS INCLUDE THIS SECTION /////////////////////
+//
+// Title: Eliza
+// Files: Eliza.java, ElizaTests.java, Config.java
+// Course: CS 200 Fall 2018
+//
+// Author: Laura Garling
+// Email: garling@wisc.edu
+// Lecturer's Name: Marc Renault
+//
+//////////////////// PAIR PROGRAMMERS COMPLETE THIS SECTION ///////////////////
+//
+// Partner Name: NONE
+// Partner Email: NONE
+// Lecturer's Name: NONE
+//
+// VERIFY THE FOLLOWING BY PLACING AN X NEXT TO EACH TRUE STATEMENT:
+// ___ Write-up states that pair programming is allowed for this assignment.
+// ___ We have both read and understand the course Pair Programming Policy.
+// ___ We have registered our team prior to the team registration deadline.
+//
+///////////////////////////// CREDIT OUTSIDE HELP /////////////////////////////
+//
+// Students who get help from sources other than their partner must fully
+// acknowledge and credit those sources of help here. Instructors and TAs do
+// not need to be credited here, but tutors, friends, relatives, room mates
+// strangers, etc do. If you received no outside help from either type of
+// source, then please explicitly indicate NONE.
+//
+// Persons: NONE
+// Online Sources:
+//////////////////// https://docs.oracle.com/javase/8/docs/api/java/lang/Character.html#isLetterOrDigit-char-
+//////////////////// https://docs.oracle.com/javase/8/docs/api/java/lang/String.html
+/////////////////////////////// 80 COLUMNS WIDE ///////////////////////////////
+
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -25,20 +58,26 @@ public class Eliza {
      */
     public static void main(String[] args) {
 
-        //System.out.print(selectPhrase(separatePhrases("LAURA? GARLING!")));
+        // System.out.print((separatePhrases("No. I'm talking to my dog! Bye.")));
 
-        //ArrayList<String> list = new ArrayList<String>();
-        String[] list = {"hello", "how are you", "quit"};
-        //list.add("hello");
-        //list.add("how are you");
-       // list.add("quit"); 
-        
-        //System.out.print(replaceWord("mom", Config.INPUT_WORD_MAP));
-        
-        assemblePhrase(list);
+        // ArrayList<String> list = new ArrayList<String>();
+        // String[] list = {"hello", "how are you", "quit"};
+        // list.add("hello");
+        // list.add("how are you");
+        // list.add("quit");
+        // System.out.print(replaceWord("mom", Config.INPUT_WORD_MAP));
+        // assemblePhrase(list);
         // System.out.print(foundQuitWord(list));
 
         // Milestone 2
+        // System.out.print(replaceWord("i'm", Config.INPUT_WORD_MAP));
+
+        // System.out.print(swapWords("i'm cant recollect", Config.PRONOUN_MAP));
+         //System.out.print((prepareInput("I am happy")));
+        /*
+         * Scanner scan = new Scanner(System.in); String userInput = scan.next(); int randNum =
+         * scan.nextInt(); Random rand = new Random(); int n = rand.nextInt(randNum);
+         */
         // create a scanner for reading user input and a random number
         // generator with Config.SEED as the seed
 
@@ -65,12 +104,15 @@ public class Eliza {
 
         // Milestone 2
         // name prompt
-
-
+        System.out.println("Hi I'm Eliza, what is your name?");
+        Scanner scnr = new Scanner(System.in);
+        String userName = scnr.next();
 
         // Milestone 2
         // welcome prompt
-
+        System.out.println("Nice to meet you " + userName + ". What is on your mind?");
+        String userInput = scnr.nextLine();
+        System.out.print(userInput);
 
         // Milestone 2
         // begin conversation loop
@@ -81,18 +123,27 @@ public class Eliza {
 
         // Milestone 2
         // prepareInput
+        ArrayList<String> userInputArrayList = separatePhrases(userInput);
+        String[] userInputArray = new String[(userInputArrayList).size()];
+        userInputArray = prepareInput(userInput);
 
         // Milestone 3
         // if no quit words then prepareResponse
+        if (foundQuitWord(userInputArrayList) == false) {
+            //userInput = prepareResponse(userInput);
+        }
 
 
         // Milestone 2
         // end loop if quit word
+        if (foundQuitWord(userInputArrayList) == true) {
 
 
-        // Milestone 2
-        // ending prompt
 
+            // Milestone 2
+            // ending prompt
+            System.out.print("Goodbye " + userName + ".");
+        }
 
         // Milestone 3
         // Save all conversation (user and system responses) starting
@@ -152,118 +203,39 @@ public class Eliza {
         }
 
         String s1 = "yeet";
-        String s2 = "yeetpt2";
-        String s3 = "yeetpt3";
-        String s4 = "yeetpt4";
 
-        for (int i = 0; i < userInput.length(); ++i) {
-            if (Character.isLetterOrDigit(userInput.charAt(i))) {
-                for (int j = 1; j < userInput.length(); ++j) {
-                    if ((userInput.charAt(j) == '?') || (userInput.charAt(j) == '!')
-                        || (userInput.charAt(j) == ',') || (userInput.charAt(j) == '.')) {
-                        s1 = userInput.substring(i, j);
-                        // System.out.print(s1);
+
+        if (userInput.length() > 0) {
+            for (int i = 0; i < userInput.length(); ++i) {
+                if (Character.isLetterOrDigit(userInput.charAt(i))) {
+                    for (int j = 1; j < userInput.length(); ++j) {
+                        while (j < i) {
+                            ++j;
+                        }
+                        if ((userInput.charAt(j) == '?') || (userInput.charAt(j) == '!')
+                            || (userInput.charAt(j) == ',') || (userInput.charAt(j) == '.')) {
+                            s1 = userInput.substring(i, j);
+                            list.add(s1);
+                            userInput = userInput.substring(s1.length(), userInput.length());
+                            userInput = userInput.trim();
+                            break;
+                        }
+
+                    }
+                } else {
+                    continue;
+                }
+            }
+            if (s1.equals("yeet")) {
+                for (int i = 0; i <= userInput.length(); ++i) {
+                    if (i == userInput.length()) {
+                        s1 = userInput.substring(0, i);
                         list.add(s1);
-                        userInput = userInput.substring(s1.length(), userInput.length());
-                        userInput = userInput.trim();
-                        break;
                     }
-
                 }
-            } else {
-                continue;
             }
-            break;
+
         }
-        if (s1.equals("yeet")) {
-            for (int i = 0; i <= userInput.length(); ++i) {
-                if (i == userInput.length()) {
-                    s1 = userInput.substring(0, i);
-                    list.add(s1);
-                    // System.out.print(s1);
-                }
-            }
-        }
-
-
-        // System.out.print(userInput.length());
-
-        if (userInput.length() > 0) {
-            for (int k = 0; k < userInput.length(); ++k) {
-                if (Character.isLetterOrDigit(userInput.charAt(k))) {
-                    for (int l = 1; l < userInput.length(); ++l) {
-                        if ((userInput.charAt(l) == '?') || (userInput.charAt(l) == '!')
-                            || (userInput.charAt(l) == ',') || (userInput.charAt(l) == '.')) {
-                            // System.out.print(k+ "," +l);
-                            // System.out.print(userInput.charAt(k));
-                            // System.out.print(userInput.charAt(l));
-                            s2 = userInput.substring(k, l);
-                            // System.out.print(s2);
-                            list.add(s2);
-                            // System.out.print(userInput);
-                            userInput = userInput.substring(l, userInput.length());
-                            // System.out.print(userInput);
-                            // System.out.print(userInput.charAt(s2.length()));
-                            userInput = userInput.trim();
-                            break;
-                        }
-                    }
-                } else {
-                    continue;
-                }
-                break;
-            }
-        }
-
-
-
-        if (userInput.length() > 0) {
-            for (int m = 0; m < userInput.length(); ++m) {
-                // System.out.print(userInput);
-                if (Character.isLetterOrDigit(userInput.charAt(m))) {
-                    for (int n = 1; n < userInput.length(); ++n) {
-                        if ((userInput.charAt(n) == '?') || (userInput.charAt(n) == '!')
-                            || (userInput.charAt(n) == ',') || (userInput.charAt(n) == '.')) {
-                            s3 = userInput.substring(m, n);
-                            list.add(s3);
-                            userInput = userInput.substring(n, userInput.length());
-                            userInput = userInput.trim();
-                            // System.out.print(s3);
-                            break;
-                        }
-                    }
-                } else {
-                    continue;
-
-
-                }
-                break;
-            }
-
-            if (userInput.length() > 0) {
-                for (int o = 0; o < userInput.length(); ++o) {
-                    // System.out.print(userInput);
-                    if (Character.isLetterOrDigit(userInput.charAt(o))) {
-                        for (int p = 1; p < userInput.length(); ++p) {
-                            if ((userInput.charAt(p) == '?') || (userInput.charAt(p) == '!')
-                                || (userInput.charAt(p) == ',') || (userInput.charAt(p) == '.')) {
-                                s4 = userInput.substring(o, p);
-                                list.add(s4);
-                                userInput = userInput.substring(p, userInput.length());
-                                userInput = userInput.trim();
-                                // System.out.print(s3);
-                                break;
-                            }
-                        }
-                    } else {
-                        continue;
-                    }
-                    break;
-                }
-            }
-        }
-
-        System.out.print(list);
         return list;
 
     }
@@ -278,7 +250,8 @@ public class Eliza {
     public static boolean foundQuitWord(ArrayList<String> phrases) {
         for (int i = 0; i < phrases.size(); ++i) {
             for (int j = 0; j < Config.QUIT_WORDS.length; ++j) {
-                if (phrases.get(i) == Config.QUIT_WORDS[j]) {
+
+                if (phrases.get(i).equals(Config.QUIT_WORDS[j])) {
                     return true;
                 }
 
@@ -297,20 +270,15 @@ public class Eliza {
      * @return the selected phrase
      */
     public static String selectPhrase(ArrayList<String> phrases) {
-        // System.out.print(phrases + "heyo");
         if (phrases == null) {
-            // System.out.print("1");
             return null;
         }
         if (phrases.size() == 0) {
-            // System.out.print("2");
             return null;
         }
         String longest = "";
         for (int i = 0; i < phrases.size(); ++i) {
-            // System.out.print("3");
             if (phrases.get(i).length() < longest.length()) {
-                // System.out.print
                 continue;
             }
             if (phrases.get(i).length() > longest.length()) {
@@ -347,17 +315,18 @@ public class Eliza {
         }
         if (wordMap == null || wordMap.length == 0) {
             return word;
-        } 
+        }
         for (int i = 0; i < wordMap.length; ++i) {
-                if (word == wordMap[i][0]){
-                    word = wordMap[i][1]; 
-                    return word; }
-                    
-                } return word;
+            if (word == wordMap[i][0]) {
+                word = wordMap[i][1];
+                return word;
             }
-        
 
-     
+        }
+        return word;
+    }
+
+
 
     /**
      * Concatenates the elements in words parameter into a string with a single space between each
@@ -369,9 +338,9 @@ public class Eliza {
      */
     public static String assemblePhrase(String[] words) {
         String allWords = "";
-        for (String word: words) {
+        for (String word : words) {
             allWords += word + " ";
-        
+
         }
         allWords = allWords.trim();
         return allWords;
@@ -390,6 +359,63 @@ public class Eliza {
      * @return The reassembled phrase
      */
     public static String swapWords(String phrase, String[][] wordMap) {
+
+        String[] origArray = new String[separatePhrases(phrase).size()];
+        for (int i = 0; i < separatePhrases(phrase).size(); ++i) {
+            origArray[i] = separatePhrases(phrase).get(i);
+        }
+
+        phrase = assemblePhrase(origArray);
+
+        ArrayList<String> arrayList = new ArrayList<String>();
+        String s1 = "";
+        if (phrase.length() > 0) {
+            for (int i = 0; i < phrase.length(); ++i) {
+                if (Character.isLetterOrDigit(phrase.charAt(i))) {
+                    for (int j = 1; j < phrase.length(); ++j) {
+                        if (phrase.charAt(j) == ' ') {
+                            s1 = phrase.substring(0, j);
+                            if (s1.contains(" ")) {
+                                for (int i1 = 0; i1 < s1.length(); ++i1) {
+                                    if (s1.charAt(i1) == ' ') {
+                                        s1 = phrase.substring(0, i1);
+                                    }
+                                }
+                            }
+                            arrayList.add(s1);
+                            phrase = phrase.substring(s1.length(), phrase.length());
+                            phrase = phrase.trim();
+                            if (!phrase.contains(" ")) {
+                                arrayList.add(phrase);
+                            }
+                        }
+                    }
+
+                }
+            }
+
+
+            System.out.println(arrayList);
+
+
+            if (wordMap == null) {
+                return phrase;
+            }
+
+            String[] stringArray = new String[arrayList.size()];
+            for (int i = 0; i < arrayList.size(); ++i) {
+                stringArray[i] = arrayList.get(i);
+            }
+            for (int i = 0; i < stringArray.length; ++i) {
+                for (int j = 0; j < wordMap.length; ++j) {
+                    if (stringArray[i].equals(wordMap[j][0])) {
+                        stringArray[i] = wordMap[j][1];
+                    }
+                }
+            }
+            String phrase2 = assemblePhrase(stringArray);
+            return phrase2;
+        }
         return null;
     }
 
@@ -403,7 +429,52 @@ public class Eliza {
      * @return words from the selected phrase
      */
     public static String[] prepareInput(String input) {
-        return null;
+        ArrayList<String> inputArrayList = new ArrayList<String>();
+        inputArrayList = separatePhrases(input);
+        if (foundQuitWord(inputArrayList) == true) {
+            return null;
+        }
+        String newInput = selectPhrase(inputArrayList);
+        newInput = swapWords(newInput, Config.INPUT_WORD_MAP);
+        newInput = swapWords(newInput, Config.PRONOUN_MAP);
+        // System.out.print("x" + newInput + "x");
+        ArrayList<String> inputArrayList2 = new ArrayList<String>();
+        String s1 = "";
+        if (newInput.length() > 0) {
+            for (int i = 0; i < newInput.length(); ++i) {
+                if (Character.isLetterOrDigit(newInput.charAt(i))) {
+                    for (int j = 1; j < newInput.length(); ++j) {
+                        if (newInput.charAt(j) == ' ') {
+                            s1 = newInput.substring(0, j);
+                            inputArrayList2.add(s1);
+                            newInput = newInput.substring(s1.length(), newInput.length());
+                            newInput = newInput.trim();
+                            if (!newInput.contains(" ")) {
+                                inputArrayList2.add(newInput);
+                            }
+                        }
+
+
+
+                    }
+
+                }
+            }
+            if (s1.equals("")) {
+                for (int i = 0; i <= newInput.length(); ++i) {
+                    if (i == newInput.length()) {
+                        s1 = newInput.substring(0, i);
+                        inputArrayList2.add(s1);
+                        // System.out.print(s1);
+                    }
+                }
+            }
+        }
+        String[] inputArray = new String[inputArrayList2.size()];
+        for (int i = 0; i < inputArrayList2.size(); ++i) {
+            inputArray[i] = inputArrayList2.get(i);
+        }
+        return inputArray;
     }
 
     /**
@@ -436,6 +507,7 @@ public class Eliza {
      * @return The response table
      */
     public static ArrayList<ArrayList<String>> loadResponseTable(String fileName) {
+
         return null;
     }
 
