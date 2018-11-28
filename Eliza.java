@@ -452,32 +452,45 @@ public class Eliza {
             return responseTable;
         }
 
-        ArrayList<String> inside = new ArrayList<String>();
+        ArrayList<String> keyword = new ArrayList<String>();
+        ArrayList <ArrayList<String>> questions = new ArrayList<ArrayList<String>>();
+        ArrayList <String> dummyArray = new ArrayList<String>();
         int counter = 0;
         while (scnr.hasNextLine()) {
             ++counter;
             scnr.nextLine();
         }
-        
+
         try {
-        scnr = new Scanner(file);
+            scnr = new Scanner(file);
         } catch (IOException e) {
             System.out.print("Error reading " + fileName + " pt 2");
         }
-        
-        int i = 0;
-        while (i < counter) {
-            if (scnr.nextLine().trim().equals("")) {
-                ++i; } 
-            String dummyString = scnr.nextLine();
-            if (dummyString.contains("keyword")) {
-                inside.add(dummyString.substring(9));
-                responseTable.add(inside);
-                ++i;
-            } System.out.println(responseTable);
-        } 
 
-        return null;
+        int i = 1;
+        while (i < counter) {
+            dummyArray.clear();
+            String dummyString = scnr.nextLine();
+            if (dummyString.trim().equals("")) {
+                ++i;
+            }
+            if (dummyString.contains("keyword")) {
+                keyword.add(dummyString.substring(9));
+                dummyString = scnr.nextLine();
+                ++i;
+            } 
+            for (int j = 0; j < counter; ++j) {
+            while (!dummyString.contains("keyword") && !dummyString.trim().equals("")) {
+                dummyArray.add(dummyString);
+                dummyString = scnr.nextLine();
+                ++i;
+                if (dummyString.equals("")) {
+                    questions.add(dummyArray);
+                }  
+            }  
+        
+        
+         }}  return null;
     }
 
     /**
