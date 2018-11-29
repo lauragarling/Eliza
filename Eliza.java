@@ -161,76 +161,64 @@ public class Eliza {
 	 * @return the phrases from the user's input
 	 */
 	public static ArrayList<String> separatePhrases(String userInput) {
-		userInput = userInput.trim().toLowerCase();
-		userInput = userInput.replace('(', ' ');
-		userInput = userInput.replace(')', ' ');
-		userInput = userInput.replace('-', ' ');
-		userInput = userInput.replace('"', ' ');
-		userInput = userInput.replace(']', ' ');
-		userInput = userInput.replace(']', ' ');
+        userInput = userInput.trim().toLowerCase();
+        userInput = userInput.replace('(', ' ');
+        userInput = userInput.replace(')', ' ');
+        userInput = userInput.replace('-', ' ');
+        userInput = userInput.replace('"', ' ');
+        userInput = userInput.replace(']', ' ');
+        userInput = userInput.replace(']', ' ');
 
-		ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<String>();
 
-		if (userInput == null) {
-			return null;
-		}
-		if (userInput.length() == 0) {
-			return list;
-		}
+        if (userInput == null) {
+            return null;
+        }
+        if (userInput.length() == 0) {
+            return list;
+        }
 
-		if (userInput.contains("  ")) {
-			userInput = userInput.replaceAll(" +", " ");
-		}
+        if (userInput.contains("  ")) {
+            userInput = userInput.replaceAll(" +", " ");
+        }
 
-		String s1 = "yeet";
+        String s1 = "yeet";
 
-		if (userInput.length() > 0) {
-			for (int i = 0; i < userInput.length(); ++i) {
-				if (Character.isLetterOrDigit(userInput.charAt(i))) {
-					for (int j = 1; j < userInput.length(); ++j) {
-						while (j < i) {
-							++j;
-						}
-						if ((userInput.charAt(j) == '?') || (userInput.charAt(j) == '!') || (userInput.charAt(j) == ',')
-								|| (userInput.charAt(j) == '.')) {
-							s1 = userInput.substring(i, j);
-							list.add(s1);
-							userInput = userInput.substring(s1.length(), userInput.length());
-							if (userInput.charAt(0) == '?' || (userInput.charAt(0) == '!')
-									|| (userInput.charAt(0) == ',') || (userInput.charAt(0) == '.')) {
-								userInput = userInput.substring(0).trim();
-								// System.out.print(userInput);
-							}
-							break;
-						} else {
-							if (!userInput.contains("?") && !userInput.contains("!") && !userInput.contains(",")
-									&& !userInput.contains(".")) {
-								s1 = userInput.trim();
-								list.add(s1);
-								j = userInput.length() + 1;
-								i = userInput.length() + 1;
-							}
 
-						}
-					}
-				} else {
-					continue;
-				}
-			}
+        if (userInput.length() > 0) {
+            for (int i = 0; i < userInput.length(); ++i) {
+                if (Character.isLetterOrDigit(userInput.charAt(i))) {
+                    for (int j = 1; j < userInput.length(); ++j) {
+                        while (j < i) {
+                            ++j;
+                        }
+                        if ((userInput.charAt(j) == '?') || (userInput.charAt(j) == '!')
+                            || (userInput.charAt(j) == ',') || (userInput.charAt(j) == '.')) {
+                            s1 = userInput.substring(i, j);
+                            list.add(s1);
+                            userInput = userInput.substring(s1.length(), userInput.length());
+                            userInput = userInput.trim();
+                            break;
+                        }
 
-			if (s1.equals("yeet")) {
-				for (int i = 0; i <= userInput.length(); ++i) {
-					if (i == userInput.length()) {
-						s1 = userInput.substring(0, i);
-						list.add(s1);
-					}
-				}
-			}
+                    }
+                } else {
+                    continue;
+                }
+            }
+            if (s1.equals("yeet")) {
+                for (int i = 0; i <= userInput.length(); ++i) {
+                    if (i == userInput.length()) {
+                        s1 = userInput.substring(0, i);
+                        list.add(s1);
+                    }
+                }
+            }
 
-		}
-		return list;
+        }
+        return list;
 
-	}
+    }
 
 	/**
 	 * Checks whether any of the phrases in the parameter match a quit word from
@@ -387,32 +375,33 @@ public class Eliza {
 	 * @return words from the selected phrase
 	 */
 	public static String[] prepareInput(String input) {
-		ArrayList<String> arrayList = separatePhrases(input);
-		// System.out.println(arrayList);
-		// String phrase = String.join(" +", separatePhrases(input));
-		if (foundQuitWord(arrayList) == true) {
-			return null;
-		}
-		String[] phraseArray;
-		// for (int i = 0; i < phraseArray.length; ++i) {
-		// arrayList.add(phraseArray[i]);
-		// }
-
-		String newPhrase = "";
-		newPhrase = selectPhrase(arrayList);
-		// System.out.println(newPhrase);
-
-		phraseArray = swapWords(newPhrase, Config.INPUT_WORD_MAP).split(" ");
-		// System.out.println(Arrays.toString(phraseArray));
-
-		ArrayList<String> newArrayList = new ArrayList<String>();
-		for (int i = 0; i < phraseArray.length; ++i) {
-			newArrayList.add(phraseArray[i]);
-		}
-		// System.out.println(newArrayList);
-
-		return phraseArray;
-	}
+        ArrayList<String> arrayList = separatePhrases(input);
+        //System.out.println(arrayList);
+        //String phrase = String.join(" +", separatePhrases(input));
+        if (foundQuitWord(arrayList) == true) {
+            return null;
+        }
+        String[] phraseArray ;
+        //for (int i = 0; i < phraseArray.length; ++i) {
+        //    arrayList.add(phraseArray[i]);
+        //}
+        
+        String newPhrase = "";
+        newPhrase = selectPhrase(arrayList);
+        //System.out.println(newPhrase);
+        
+        phraseArray = swapWords(newPhrase, Config.INPUT_WORD_MAP).split(" ");
+        //System.out.println(Arrays.toString(phraseArray));
+        
+        ArrayList <String> newArrayList = new ArrayList<String>();
+        for (int i = 0; i < phraseArray.length; ++i) {
+            newArrayList.add(phraseArray[i]);
+        }
+        //System.out.println(newArrayList);
+        
+        
+        return phraseArray;
+    }
 
 	/**
      * Reads a file that contains keywords and responses. A line contains either a list of keywords
@@ -450,53 +439,72 @@ public class Eliza {
 		Scanner scnr;
 		try {
 			scnr = new Scanner(file);
-			// System.out.print("File has been opened");
+			//System.out.print("File has been opened");
 
 		} catch (IOException e) {
 			System.out.print("Error reading " + fileName);
 			return responseTable;
 		}
+		
+		
 		int counter = 0;
 		while (scnr.hasNextLine()) {
-			  counter++;
+			  ++counter;
 			  scnr.nextLine();
 			}
-		System.out.print(counter);
-		ArrayList<String> dummyArray = new ArrayList<String>();
 		try {
 			scnr = new Scanner(file);
-			// System.out.print("File has been opened");
+			//System.out.print("File has been opened");
 
 		} catch (IOException e) {
 			System.out.print("Error reading " + fileName);
 			return responseTable;
-		}		int i = 0;
-		while (i < 432) {
-			System.out.println(i);
-			String dummyString = scnr.nextLine();
+		}
+		ArrayList <ArrayList<String>> keywordArrayList = new ArrayList<ArrayList<String>>();
+		ArrayList <String> keywords = new ArrayList<String>();
+		String dummyString = "";
+		while (scnr.hasNextLine()) {
+			dummyString = scnr.nextLine();
+			keywords = new ArrayList<String>();
 			if (dummyString.contains("keyword")) {
 				dummyString = dummyString.substring(9);
-				dummyArray.add(dummyString);
-				++i;
-			} else if (dummyString.equals("")) {
-				++i;
-			} else {
-				while (!dummyString.equals("") && !dummyString.contains("keyword")) {
-					dummyArray.add(dummyString);
-					++i;
-					if (i < 369) {
-						System.out.println(i + " " +dummyString);
-					dummyString = scnr.nextLine();
-				}}
+				keywords.add(dummyString);
+				keywordArrayList.add(keywords);}
+		} //System.out.print(keywordArrayList);
+			try {
+				scnr = new Scanner(file);
+				// System.out.print("File has been opened");
+
+			} catch (IOException e) {
+				System.out.print("Error reading " + fileName);
+				return responseTable;
 			}
-			responseTable.add(dummyArray);
-			dummyArray.clear();
+		ArrayList <ArrayList<String>> responseArrayList = new ArrayList<ArrayList<String>>();
+			ArrayList <String> responses = new ArrayList <String>();
+			String dummyString2 = "";
+			int i=0;
+			while (scnr.hasNextLine()) {
+				dummyString2 = scnr.nextLine();
+				++i;
+				responses = new ArrayList<String>();
+				while (!dummyString2.contains("keyword") && !dummyString2.equals("") && i <= counter) {
+					responses.add(dummyString2);
+					if (i < counter) {
+					dummyString2 = scnr.nextLine();}
+					++i;}
+				if (responses.size() != 0) {
+				 responseArrayList.add(responses);
+			} } 
+		for (int y = 0; y < responseArrayList.size(); ++y) {
+			responseTable.add(keywordArrayList.get(y));
+			responseTable.add(responseArrayList.get(y));
 		}
-			for (int j = 0; j < responseTable.size(); ++j) {
-				System.out.println(responseTable.get(j));
-			}
+	for (int z = 0; z < responseTable.size(); ++z) {
+		System.out.println(responseTable.get(z));
+	}
+	
 		
-		return null;
+		return responseTable;
 	}
 
 	/**
