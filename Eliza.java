@@ -61,7 +61,16 @@ public class Eliza {
         // Milestone 2
         // System.out.println(prepareInput("The weather is great! bye"));
         // System.out.println("[the weather is great, bye]");
-        //System.out.print(loadResponseTable("Eliza.rsp"));
+    String[] phrase = {"does", "that", "computer", "on", "your", "desk", "work"};
+    ArrayList<String> keywords = new ArrayList<String>();
+    keywords.add("computer");
+phrase = findKeyWordsInPhrase(keywords, phrase);
+
+    System.out.println(phrase == null);
+    System.out.println(phrase.length != 2);
+    System.out.println(!phrase[0].equals("does that"));
+    System.out.println(!phrase[1].equals("on your desk work"));
+
         // create a scanner for reading user input and a random number
         // generator with Config.SEED as the seed
 
@@ -184,13 +193,17 @@ public class Eliza {
                         }
                         if ((userInput.charAt(j) == '?') || (userInput.charAt(j) == '!')
                             || (userInput.charAt(j) == ',') || (userInput.charAt(j) == '.')) {
-                            s1 = userInput.substring(i, j);
-                            list.add(s1);
-                            userInput = userInput.substring(s1.length(), userInput.length());
+                            if (i > 0) {
+                                s1 = userInput.substring(i-1, j);
+                            } else {
+                            s1 = userInput.substring(i, j); }
+                            //System.out.print(s1);
+                            list.add(s1.trim());
+                            userInput = userInput.substring(s1.length()-1, userInput.length());
                             if (userInput.charAt(0) == '?' || (userInput.charAt(0) == '!')
                                 || (userInput.charAt(0) == ',') || (userInput.charAt(0) == '.')) {
                                 userInput = userInput.substring(1).trim();
-                                // System.out.print(userInput);
+                                //System.out.print(userInput);
                             }
                             break;
                         } else {
@@ -539,8 +552,38 @@ public class Eliza {
      */
     public static String[] findKeyWordsInPhrase(ArrayList<String> keywords, String[] phrase) {
         // see the algorithm presentation linked in Eliza.pdf.
-
-        return null;
+        for (int i = 0; i < keywords.size(); ++i) {
+            if (!Arrays.asList(phrase).contains(keywords.get(i))) {
+                return null;
+            }
+        }
+        ArrayList<String> unmatched = new ArrayList<String>();
+        String s1 = "";
+        for (int i = 0; i < keywords.size(); ++i) {
+            for (int j = 0; j < phrase.length; ++j) {
+                if (phrase[j] == keywords.get(i)) {
+                    if (s1.equals("") && (j == 0 || j == phrase.length-1)) {
+                        unmatched.add(s1.trim()); }
+                    else {
+                        unmatched.add(s1.trim());
+                        s1 = "";
+                        }
+                } else {
+                    s1 += phrase[j] + " ";
+                    //System.out.println(s1);
+                    if (i == keywords.size()-1 && j == phrase.length-1) {
+                        unmatched.add(s1.trim());
+                    }
+                }
+            }
+        }
+        //System.out.print(unmatched);
+        String[] toReturn = new String[unmatched.size()];
+        for (int i = 0; i < unmatched.size(); ++i) {
+            toReturn[i] = unmatched.get(i);
+        }
+        System.out.print(Arrays.toString(toReturn));
+        return toReturn;
     }
 
     /**

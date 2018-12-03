@@ -81,7 +81,7 @@ public class ElizaTests {
 
         // Milestone 3:
         // main: implement the rest of main as described in the main method comments
-        // testFindKeyWordsInPhrase();
+         testFindKeyWordsInPhrase();
         // testSelectResponse();
         // testInputAndResponse();
         // testSaveDialog();
