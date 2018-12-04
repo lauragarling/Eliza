@@ -584,7 +584,7 @@ public class ElizaTests {
      * This runs some tests on the selectResponse method. 1. TODO describe each test in your own
      * words. 2.
      */
-    private static void testSelectResponse() {
+   /* private static void testSelectResponse() {
         boolean error = false;
 
         { // 1.
@@ -647,7 +647,7 @@ public class ElizaTests {
             System.out.println("testSelectResponse passed");
         }
     }
-
+*/
     /**
      * This runs some tests on the prepareInput method. 1. TODO describe each test in your own
      * words. 2.
@@ -785,10 +785,8 @@ public class ElizaTests {
         Random randGen = new Random(923);
         ArrayList<ArrayList<String>> responseTable =
             //Eliza.loadResponseTable("Eliza" + Config.RESPONSE_FILE_EXTENSION);
-
         numPassed += checkResponse("I like computers.",
             "What do you think machines have to do with your problem?", randGen, responseTable);
-
         numPassed += checkResponse("What is your name?",
             "I don't care about names -- please continue.", randGen, responseTable);
         numPassed += checkResponse("You remind me of a grumpy uncle.",
@@ -825,10 +823,8 @@ public class ElizaTests {
         numPassed += checkResponse("I'm talking to my dog.",
             "How long have you been talking to your dog?", randGen, responseTable);
         numPassed += checkResponse("goodbye", null, randGen, responseTable);
-
         numPassed +=
             checkResponse("", "I'm not sure I understand you fully.", randGen, responseTable);
-
         int expected = 21;
         if (numPassed == expected) {
             System.out.println("testInputAndResponse passed ");
