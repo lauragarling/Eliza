@@ -59,6 +59,43 @@ public class Eliza {
      */
     public static void main(String[] args) {
 
+        Random randGen = new Random(923);
+        ArrayList<ArrayList<String>> responseTable =
+                Eliza.loadResponseTable("Eliza" + Config.RESPONSE_FILE_EXTENSION);
+    	String input = "What is your name?";
+    	String expectedResponse  ="What do you think machines have to do with your problem?";
+    	
+    	
+    	String[] words = Eliza.prepareInput(input);
+        if (words == null) {
+            if (expectedResponse == null) {
+                System.out.print("passed");
+            } else {
+                System.out.println("testInputLines  checkResponse error");
+                System.out.println("  input='" + input + "'");
+                System.out.println("  response=null");
+                System.out.println("  expected='" + expectedResponse + "'");
+            }
+        }
+
+        String response = Eliza.prepareResponse(words, randGen, responseTable);
+        if (!response.equals(expectedResponse)) {
+            System.out.println("testPrepareResponse  checkResponse error");
+            System.out.println("  input='" + input + "'");
+            System.out.println("  response='" + response + "'");
+            System.out.println("  expected='" + expectedResponse + "'");
+            
+        } else {
+            System.out.print("passed.");;
+        }
+    }
+    
+    
+    	
+    	
+    	
+    	
+    	
         // Milestone 2
         // System.out.println(prepareInput("The weather is great! bye"));
         // System.out.println("[the weather is great, bye]");
@@ -79,8 +116,8 @@ public class Eliza {
         strList.add("cat");
         String choice = Eliza.selectResponse(randGen, strList);
         System.out.print(choice);*/
-        System.out.print(loadResponseTable("Eliza.rsp"));
-        prepareResponse(args, null, loadResponseTable("Eliza.rsp"));
+        //System.out.print(loadResponseTable("Eliza.rsp"));
+        //prepareResponse(args, null, loadResponseTable("Eliza.rsp"));
        
        
         // create a scanner for reading user input and a random number
@@ -155,7 +192,7 @@ public class Eliza {
         // "Unable to save conversation to: " <name of file>
         // Repeat the code prompting the user if they want to save the dialog.
 
-    }
+    
 
     /**
      * This method processes the user input, returning an ArrayList containing
@@ -652,7 +689,7 @@ public class Eliza {
         for (int i = 0; i < unmatched.size(); ++i) {
             toReturn[i] = unmatched.get(i);
         }
-        System.out.print(Arrays.toString(toReturn));
+        //System.out.print(Arrays.toString(toReturn));
         return toReturn;
     }
 
@@ -706,6 +743,9 @@ public class Eliza {
     public static String prepareResponse(String[] userWords, Random rand, ArrayList<ArrayList<String>> responseTable) {
 
         // Iterate through the response table.
+    	System.out.println(Arrays.toString(userWords));
+    	
+    	String response = "";
         String[] stringArray;
         int j = 0;
         for (int i = 0; i < responseTable.size(); i += 2) {
@@ -717,10 +757,8 @@ public class Eliza {
         stringArray = findKeyWordsInPhrase(responseTable.get(i), userWords);
             if (stringArray != null) {
                 j = i;
-                break; 
-            } 
+            } break;
         }
-                    
         // checks to see if the current keywords match the user's words
         // using findKeyWordsInPhrase.
         
@@ -729,13 +767,12 @@ public class Eliza {
         // keywords
         stringArray = findKeyWordsInPhrase(responseTable.get(j), userWords);
         if (stringArray == null) {
-            return Config.NO_MATCH_RESPONSE;
-        } else {
-          int randNum = rand.nextInt(responseTable.size());
+            return Config.NO_MATCH_RESPONSE; }
+         else {
+          int randNum = rand.nextInt(responseTable.get(j+1).size());
+          response = responseTable.get(j+1).get(randNum);
           
         }
-        return null;
-                
         // Look for <1>, <2> etc in the chosen response. The number starts with 1 and
         // there won't be more than the number of elements in unmatchedWords returned by
         // findKeyWordsInPhrase. Note the number of elements in unmatchedWords will be
@@ -744,11 +781,29 @@ public class Eliza {
         // swap
         // its pronoun words (swapWords using Config.PRONOUN_MAP). Then use the
         // result to replace the <n> in the chosen response.
-
+        
+        int k = 0;
+        if (response.contains("<1>")) {
+        	stringArray[0] = swapWords(stringArray[0], Config.PRONOUN_MAP);
+            response = response.replace("<1>", stringArray[0]);
+        } if (response.contains("<2>")) {
+        	stringArray[1] = swapWords(stringArray[1], Config.PRONOUN_MAP);
+        	response = response.replace("<2>", stringArray[1]);
+        } else {
+        	if (response.contains("<")) {
+        		k = response.indexOf("<");
+        		int n = response.charAt(k+1);
+        		stringArray[n-1] = swapWords(stringArray[n-1], Config.PRONOUN_MAP);
+        		response = response.replace(response.substring(k, k+2), stringArray[n-1]);
+        	}
+        	
+        }
+        
         // in the selected echo, swap pronouns
 
         // inserts the new phrase with pronouns swapped, into the response
-            
+        return response;
+         
     }
 
     /**
