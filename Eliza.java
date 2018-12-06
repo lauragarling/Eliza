@@ -59,9 +59,7 @@ public class Eliza {
      */
     public static void main(String[] args) {
         
-        
-        
-
+    	
         //Milestone 2
         //create a scanner for reading user input and a random number
         //generator with Config.SEED as the seed
@@ -104,19 +102,25 @@ public class Eliza {
             //obtain user input
             String userInput = scnr.nextLine();
 
+            	
+            
+            
             //Milestone 2
             //prepareInput
             String [] inputArray = prepareInput(userInput);
+            	//System.out.println(Arrays.toString(inputArray));
             ArrayList<String> inputArrayList = new ArrayList<String>();
             ArrayList<ArrayList<String>> responseTable = loadResponseTable("Eliza.rsp");
             Random rand = new Random(Config.SEED);
             for (int i = 0; i < inputArray.length; ++i) {
                 inputArrayList.add(inputArray[i]);
             }
+            	//System.out.println(inputArrayList);
                 //Milestone 3
                 //if no quit words then prepareResponse
                 if (foundQuitWord(inputArrayList) == false) {
                     String response = prepareResponse(inputArray, rand, responseTable);
+                    //System.out.println(responseTable.get(130));
                     System.out.println(response);
                 }
 
@@ -650,6 +654,7 @@ public class Eliza {
         for (int i = 0; i < unmatched.size(); ++i) {
             toReturn[i] = unmatched.get(i);
         }
+        
         //System.out.print(Arrays.toString(toReturn));
         return toReturn;
     }
@@ -714,18 +719,20 @@ public class Eliza {
         // The response table has paired rows. The first row is a list of key
         // words, the next a list of corresponding responses. The 3rd row another
         // list of keywords and 4th row the corresponding responses.
-        
-        stringArray = findKeyWordsInPhrase(responseTable.get(i), userWords);
-        //System.out.println(Arrays.toString(userWords));
-            if (stringArray != null) {
-                System.out.print(responseTable.get(i));
+       ArrayList <String> yeet = new ArrayList<String>();
 
-                //System.out.print(Arrays.toString(stringArray));
+        stringArray = findKeyWordsInPhrase(responseTable.get(i), userWords);
+            if (stringArray != null) {
+            	if (responseTable.size() > 1 && responseTable.get(i).size() > 1) {
+            		if (Arrays.asList(userWords).indexOf(responseTable.get(i).get(0)) > Arrays.asList(userWords).indexOf(responseTable.get(i).get(1))) {
+            			continue;
+            		}
+            	}
              break; }
-        }
-        
+        } 
         //System.out.print(Arrays.toString(stringArray));
-        //System.out.print(Arrays.toString(stringArray));
+        if (stringArray == null) {
+            return Config.NO_MATCH_RESPONSE; }
         // checks to see if the current keywords match the user's words
         // using findKeyWordsInPhrase.
         
@@ -736,8 +743,7 @@ public class Eliza {
         String response = selectResponse(rand, responseTable.get(i + 1));
         //System.out.print(response);
 
-        if (stringArray == null || response == null) {
-            return Config.NO_MATCH_RESPONSE; }
+       
          //System.out.println(response);
         // Look for <1>, <2> etc in the chosen response. The number starts with 1 and
         // there won't be more than the number of elements in unmatchedWords returned by

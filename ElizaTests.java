@@ -341,7 +341,6 @@ public class ElizaTests {
             ArrayList<String> keywords = new ArrayList<String>();
             keywords.add("computer");
             String[] phrase = {"are", "you", "a", "computer"};
-
             String[] matches = Eliza.findKeyWordsInPhrase(keywords, phrase);
             if (matches == null || matches.length != 2 || !matches[0].equals("are you a")
                 || !matches[1].equals("")) {
