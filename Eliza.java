@@ -58,140 +58,92 @@ public class Eliza {
      * @param args (unused)
      */
     public static void main(String[] args) {
+        
+        
+        
 
-        Random randGen = new Random(923);
-        ArrayList<ArrayList<String>> responseTable =
-                Eliza.loadResponseTable("Eliza" + Config.RESPONSE_FILE_EXTENSION);
-    	String input = "What is your name?";
-    	String expectedResponse  ="What do you think machines have to do with your problem?";
-    	
-    	
-    	String[] words = Eliza.prepareInput(input);
-        if (words == null) {
-            if (expectedResponse == null) {
-                System.out.print("passed");
-            } else {
-                System.out.println("testInputLines  checkResponse error");
-                System.out.println("  input='" + input + "'");
-                System.out.println("  response=null");
-                System.out.println("  expected='" + expectedResponse + "'");
-            }
-        }
+        //Milestone 2
+        //create a scanner for reading user input and a random number
+        //generator with Config.SEED as the seed
+        Scanner scnr = new Scanner(System.in);
+        
 
-        String response = Eliza.prepareResponse(words, randGen, responseTable);
-        if (!response.equals(expectedResponse)) {
-            System.out.println("testPrepareResponse  checkResponse error");
-            System.out.println("  input='" + input + "'");
-            System.out.println("  response='" + response + "'");
-            System.out.println("  expected='" + expectedResponse + "'");
-            
-        } else {
-            System.out.print("passed.");;
-        }
-    }
-    
-    
-    	
-    	
-    	
-    	
-    	
-        // Milestone 2
-        // System.out.println(prepareInput("The weather is great! bye"));
-        // System.out.println("[the weather is great, bye]");
-        /*ArrayList<String> keywords = new ArrayList<String>();
-        keywords.add("is");
-        keywords.add("absolute");
-        String[] phrase = {"laura", "is", "the", "absolute", "best"};
-        String[] matches = Eliza.findKeyWordsInPhrase(keywords, phrase);
-        System.out.println(matches == null);
-        System.out.println(matches.length != 3); 
-        System.out.println(!matches[0].equals("laura"));
-        System.out.println(!matches[1].equals("the"));
-        System.out.println(!matches[2].equals("best")); */
-        /*Random randGen = new Random(434);
-        ArrayList<String> strList = new ArrayList<>();
-        strList.add("The");
-        strList.add("happy");
-        strList.add("cat");
-        String choice = Eliza.selectResponse(randGen, strList);
-        System.out.print(choice);*/
-        //System.out.print(loadResponseTable("Eliza.rsp"));
-        //prepareResponse(args, null, loadResponseTable("Eliza.rsp"));
-       
-       
-        // create a scanner for reading user input and a random number
-        // generator with Config.SEED as the seed
 
-        // Milestone 3
-        // How the program starts depends on the command-line arguments.
+        //Milestone 3
+        //How the program starts depends on the command-line arguments.
         // Command-line arguments can be names of therapists for example:
-        // Eliza Joe Laura
+        //   Eliza Joe Laura
         // If no command-line arguments then the therapists name is Eliza
         // and this reads a file with that name and the Config.RESPONSE_FILE_EXTENSION.
         // Example filename: Eliza.rsp
-        // If only one command-line argument, then read the responses from
-        // the corresponding file with Config.RESPONSE_FILE_EXTENSION.
+        // If only one command-line argument, then read the responses from 
+        // the corresponding file with Config.RESPONSE_FILE_EXTENSION. 
         // If there is more than one command-line argument then offer them
-        // as a list of people to talk with. For the three therapists above the prompt
-        // is
-        // "Would you like to speak with Eliza, Joe, or Laura?"
+        // as a list of people to talk with. For the three therapists above the prompt is
+        //   "Would you like to speak with Eliza, Joe, or Laura?"
         // When a user types a name then read the responses from the file which
         // is the selected name and Config.RESPONSE_FILE_EXTENSION extension.
         // Whatever name the user types has the extension appended and
         // is read using loadResponseTable. If loadResponseTable can't load
         // the file then it will report an error.
 
-        /*
-         * // Milestone 2 // name prompt
-         * System.out.println("Hi I'm Eliza, what is your name?"); Scanner scnr = new
-         * Scanner(System.in); String userName = scnr.next();
-         * 
-         * // Milestone 2 // welcome prompt System.out.println("Nice to meet you " +
-         * userName + ". What is on your mind?"); String userInput = scnr.nextLine();
-         * System.out.print(userInput);
-         * 
-         * // Milestone 2 // begin conversation loop
-         * 
-         * // Milestone 2 // obtain user input
-         * 
-         * 
-         * // Milestone 2 // prepareInput ArrayList<String> userInputArrayList =
-         * separatePhrases(userInput); String[] userInputArray = new
-         * String[(userInputArrayList).size()]; userInputArray =
-         * prepareInput(userInput);
-         * 
-         * // Milestone 3 // if no quit words then prepareResponse if
-         * (foundQuitWord(userInputArrayList) == false) { // userInput =
-         * prepareResponse(userInput); }
-         * 
-         * 
-         * // Milestone 2 // end loop if quit word if (foundQuitWord(userInputArrayList)
-         * == true) {
-         * 
-         * 
-         * 
-         * // Milestone 2 // ending prompt System.out.print("Goodbye " + userName +
-         * "."); }
-         */
+        
+        //Milestone 2
+        //name prompt
+        System.out.println("Hi I'm Eliza, what is your name?");
+        String userName =scnr.nextLine();
+        
+        //Milestone 2
+        //welcome prompt
+        System.out.println("Nice to meet you " + userName + ". What is on your mind?");
+        
+        //Milestone 2
+        //begin conversation loop
+        while (scnr.hasNextLine()) {
+            //Milestone 2
+            //obtain user input
+            String userInput = scnr.nextLine();
 
-        // loadResponseTable("Eliza.rsp");
-        // System.out.print(prepareInput("Seeya!!!!!!"));
-        // System.out.print(replaceWord("i'm happy", Config.PRONOUN_MAP));
-        // Milestone 3
-        // Save all conversation (user and system responses) starting
-        // with this program saying "Hi I'm..." and concludes with
-        // "Goodbye <name>.".
-        // Always prompt the user to see if they would like to save a
-        // record of the conversation. If the user enters a y or Y as the
-        // first non-whitespace character then prompt for filename and save,
-        // otherwise don't save dialog. After successfully saving a dialog
-        // print the message "Thanks again for talking! Our conversation is saved in:
-        // <filename>".
-        // If saveDialog throws an IOException then catch it, print out the error:
-        // "Unable to save conversation to: " <name of file>
-        // Repeat the code prompting the user if they want to save the dialog.
+            //Milestone 2
+            //prepareInput
+            String [] inputArray = prepareInput(userInput);
+            ArrayList<String> inputArrayList = new ArrayList<String>();
+            ArrayList<ArrayList<String>> responseTable = loadResponseTable("Eliza.rsp");
+            Random rand = new Random(Config.SEED);
+            for (int i = 0; i < inputArray.length; ++i) {
+                inputArrayList.add(inputArray[i]);
+            }
+                //Milestone 3
+                //if no quit words then prepareResponse
+                if (foundQuitWord(inputArrayList) == false) {
+                    String response = prepareResponse(inputArray, rand, responseTable);
+                    System.out.println(response);
+                }
 
+            //Milestone 2
+            //end loop if quit word
+                else {
+                    System.out.println("Goodbye " + userName + ".");
+                    break; }
+
+        //Milestone 2
+        //ending prompt
+        
+        //Milestone 3
+        //Save all conversation (user and system responses) starting
+        //with this program saying "Hi I'm..." and concludes with
+        //"Goodbye <name>.".
+        //Always prompt the user to see if they would like to save a 
+        //record of the conversation.  If the user enters a y or Y as the 
+        //first non-whitespace character then prompt for filename and save, 
+        //otherwise don't save dialog.  After successfully saving a dialog 
+        //print the message "Thanks again for talking! Our conversation is saved in: <filename>".
+        //If saveDialog throws an IOException then catch it, print out the error:
+        //  "Unable to save conversation to: " <name of file> 
+        //Repeat the code prompting the user if they want to save the dialog.
+
+        }  
+    }
     
 
     /**
@@ -216,7 +168,7 @@ public class Eliza {
      * @param userInput text the user typed
      * @return the phrases from the user's input
      */
-    public static ArrayList<String> separatePhrases(String userInput) {
+    public static ArrayList<String> separatePhrases (String userInput) {
         userInput = userInput.trim().toLowerCase();
         userInput = userInput.replace('(', ' ');
         userInput = userInput.replace(')', ' ');
@@ -394,8 +346,8 @@ public class Eliza {
      */
     public static String assemblePhrase(String[] words) {
         String allWords = "";
-        for (String word : words) {
-            allWords += word + " ";
+        for (int i = 0; i < words.length; ++i) {
+            allWords = allWords.concat(words[i]).concat(" ");
 
         }
         allWords = allWords.trim();
@@ -417,23 +369,29 @@ public class Eliza {
      * @return The reassembled phrase
      */
     public static String swapWords(String phrase, String[][] wordMap) {
+        //System.out.println("x" + phrase + "x");
         if (wordMap == null) {
+            return phrase;
+        }
+        if (phrase == null) {
+            phrase = "";
             return phrase;
         }
         String[] words = phrase.split(" ");
         ArrayList<String> origArrayList = new ArrayList<String>();
 
-        for (int i = 0; i < words.length; ++i) {
-            origArrayList.add(words[i]);
+        for (int i = 0; i < wordMap.length; ++i) {
+            
+        for (int j = 0; j < words.length; ++j) {
+            if (words[j].equals(wordMap[i][0])) {
+                words[j] = replaceWord(words[j], wordMap);
+            }
         }
-        for (int i = 0; i < origArrayList.size(); ++i) {
-            origArrayList.set(i, replaceWord(origArrayList.get(i), wordMap));
+            
         }
-        String[] newWords = new String[origArrayList.size()];
-        for (int i = 0; i < origArrayList.size(); ++i) {
-            newWords[i] = origArrayList.get(i);
-        }
-        String newPhrase = assemblePhrase(newWords);
+        
+        
+        String newPhrase = assemblePhrase(words);
         return newPhrase;
     }
 
@@ -454,7 +412,7 @@ public class Eliza {
         if (foundQuitWord(arrayList) == true) {
             return null;
         }
-        String[] phraseArray;
+        
         // for (int i = 0; i < phraseArray.length; ++i) {
         // arrayList.add(phraseArray[i]);
         // }
@@ -462,17 +420,21 @@ public class Eliza {
         String newPhrase = "";
         newPhrase = selectPhrase(arrayList);
         // System.out.println(newPhrase);
-
-        phraseArray = swapWords(newPhrase, Config.INPUT_WORD_MAP).split(" ");
+        if (swapWords(newPhrase, Config.INPUT_WORD_MAP) == "") {
+            String[] phraseArray2 = {""};
+            ArrayList<String> newArrayList = new ArrayList<String>();
+            for (int i = 0; i < phraseArray2.length; ++i) {
+                newArrayList.add(phraseArray2[i]);
+            }
+            return phraseArray2;
+         }
+        if (swapWords(newPhrase, Config.INPUT_WORD_MAP) != null || swapWords(newPhrase, Config.INPUT_WORD_MAP) != "") {
+            String [] phraseArray = swapWords(newPhrase, Config.INPUT_WORD_MAP).split(" ");
+            return phraseArray;
+        }
         // System.out.println(Arrays.toString(phraseArray));
 
-        ArrayList<String> newArrayList = new ArrayList<String>();
-        for (int i = 0; i < phraseArray.length; ++i) {
-            newArrayList.add(phraseArray[i]);
-        }
-        // System.out.println(newArrayList);
-
-        return phraseArray;
+        return null;
     }
 
     /**
@@ -545,6 +507,12 @@ public class Eliza {
             keywords = new ArrayList<String>();
             if (dummyString.contains("keyword")) {
                 dummyString = dummyString.substring(9);
+                while (dummyString.contains(" ")) {
+                   int k = dummyString.indexOf(" ");
+                   String yeet = dummyString.substring(0, k);
+                   keywords.add(yeet.trim());
+                   dummyString = dummyString.substring(k).trim();
+                }
                 keywords.add(dummyString);
                 keywordArrayList.add(keywords);
             }
@@ -625,6 +593,7 @@ public class Eliza {
      */
     public static String[] findKeyWordsInPhrase(ArrayList<String> keywords, String[] phrase) {
         // see the algorithm presentation linked in Eliza.pdf.
+        //the following code checks to make sure the keywords are in the correct order.
         for (int i = 0; i < keywords.size(); ++i) {
             if (!Arrays.asList(phrase).contains(keywords.get(i))) {
                 return null;
@@ -638,37 +607,30 @@ public class Eliza {
                     k = j;
             }
         }
-            //System.out.println(keywords.get(0) + "==" + phrase[2]);
         int l = 0;
             for (int j = 0; j < phrase.length; ++j) {
                 if (keywords.get(1) == phrase[j]) {
                     l = j;
                 }
             }
-            //System.out.println(keywords.get(1) + "==" + phrase[4]);
-            
-        //System.out.println(l);
-            
         if (l < k) {
             return null;
         } }
-            
+            //System.out.println(Arrays.toString(phrase));
+            //System.out.println(keywords);
         ArrayList<String> unmatched = new ArrayList<String>();
         String s1 = "";
         for (int i = 0; i < keywords.size(); ++i) {
             for (int j = 0; j < phrase.length; ++j) {
-                //System.out.println("1:  " + i);
-                //System.out.print(keywords.size());
-                if (phrase[j] == keywords.get(i)) {
+               // System.out.println(phrase[j]);
+               // System.out.println(keywords.get(i));
+                if (phrase[j].equals(keywords.get(i))) {
+                    //System.out.print(phrase[j]);
                     if (keywords.size()-1 > i) {
-                        //System.out.println("2:   " + i);
                     ++i;}
-                    //System.out.println("3:    " + i);}
-                    // System.out.println(phrase.length-1);
                     if (j == 0) {
                         unmatched.add(s1.trim());
                     } else {
-                        // System.out.print(s1);
                         unmatched.add(s1.trim());
                         s1 = "";
                         if (j == phrase.length - 1) {
@@ -677,7 +639,6 @@ public class Eliza {
                     }
                 } else {
                     s1 += phrase[j] + " ";
-                    // System.out.println(s1);
                     if (i == keywords.size() - 1 && j == phrase.length - 1) {
                         unmatched.add(s1.trim());
                     }
@@ -692,6 +653,7 @@ public class Eliza {
         //System.out.print(Arrays.toString(toReturn));
         return toReturn;
     }
+
 
     /**
      * Selects a randomly generated response within the list of possible responses
@@ -712,7 +674,7 @@ public class Eliza {
     
     int randNum = rand.nextInt(responseList.size());
     String response = responseList.get(randNum);
-    
+    //System.out.print(response);
         return response;
     }
 
@@ -743,36 +705,40 @@ public class Eliza {
     public static String prepareResponse(String[] userWords, Random rand, ArrayList<ArrayList<String>> responseTable) {
 
         // Iterate through the response table.
-    	System.out.println(Arrays.toString(userWords));
-    	
-    	String response = "";
-        String[] stringArray;
-        int j = 0;
-        for (int i = 0; i < responseTable.size(); i += 2) {
+        //System.out.println(Arrays.toString(userWords));
         
+        String[] stringArray = null;
+        int i = 0;
+        //System.out.print(responseTable);
+        for (i = 0; i < responseTable.size(); i += 2) {
         // The response table has paired rows. The first row is a list of key
         // words, the next a list of corresponding responses. The 3rd row another
         // list of keywords and 4th row the corresponding responses.
         
         stringArray = findKeyWordsInPhrase(responseTable.get(i), userWords);
+        //System.out.println(Arrays.toString(userWords));
             if (stringArray != null) {
-                j = i;
-            } break;
+                System.out.print(responseTable.get(i));
+
+                //System.out.print(Arrays.toString(stringArray));
+             break; }
         }
+        
+        //System.out.print(Arrays.toString(stringArray));
+        //System.out.print(Arrays.toString(stringArray));
         // checks to see if the current keywords match the user's words
         // using findKeyWordsInPhrase.
         
         // if no keyword pattern was matched, return Config.NO_MATCH_RESPONSE
         // else, select a response using the appropriate list of responses for the
         // keywords
-        stringArray = findKeyWordsInPhrase(responseTable.get(j), userWords);
-        if (stringArray == null) {
+        
+        String response = selectResponse(rand, responseTable.get(i + 1));
+        //System.out.print(response);
+
+        if (stringArray == null || response == null) {
             return Config.NO_MATCH_RESPONSE; }
-         else {
-          int randNum = rand.nextInt(responseTable.get(j+1).size());
-          response = responseTable.get(j+1).get(randNum);
-          
-        }
+         //System.out.println(response);
         // Look for <1>, <2> etc in the chosen response. The number starts with 1 and
         // there won't be more than the number of elements in unmatchedWords returned by
         // findKeyWordsInPhrase. Note the number of elements in unmatchedWords will be
@@ -782,23 +748,20 @@ public class Eliza {
         // its pronoun words (swapWords using Config.PRONOUN_MAP). Then use the
         // result to replace the <n> in the chosen response.
         
-        int k = 0;
-        if (response.contains("<1>")) {
-        	stringArray[0] = swapWords(stringArray[0], Config.PRONOUN_MAP);
-            response = response.replace("<1>", stringArray[0]);
-        } if (response.contains("<2>")) {
-        	stringArray[1] = swapWords(stringArray[1], Config.PRONOUN_MAP);
-        	response = response.replace("<2>", stringArray[1]);
-        } else {
-        	if (response.contains("<")) {
-        		k = response.indexOf("<");
-        		int n = response.charAt(k+1);
-        		stringArray[n-1] = swapWords(stringArray[n-1], Config.PRONOUN_MAP);
-        		response = response.replace(response.substring(k, k+2), stringArray[n-1]);
-        	}
-        	
+        int num = stringArray.length;
+        //System.out.println(num);
+        for (int n = 1; n <= num; ++n) {
+             //System.out.print(n);
+            if (response.contains("<" + n + ">")) {
+                //System.out.println(stringArray[n-1]);
+                String yeet = swapWords(stringArray[n - 1], Config.PRONOUN_MAP);
+                // System.out.print("l");
+                response = response.replaceAll("<" + n + ">", yeet);
+            }
         }
         
+//System.out.print(response);
+
         // in the selected echo, swap pronouns
 
         // inserts the new phrase with pronouns swapped, into the response

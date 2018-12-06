@@ -83,7 +83,7 @@ public class ElizaTests {
         // main: implement the rest of main as described in the main method comments
          testFindKeyWordsInPhrase();
          testSelectResponse();
-         testInputAndResponse();
+        testInputAndResponse();
          testSaveDialog();
     }
 
@@ -336,7 +336,7 @@ public class ElizaTests {
     private static void testFindKeyWordsInPhrase() {
         boolean error = false;
 
-        {// block so each test has its own variable scope.
+        /*{// block so each test has its own variable scope.
          // 1.
             ArrayList<String> keywords = new ArrayList<String>();
             keywords.add("computer");
@@ -349,7 +349,7 @@ public class ElizaTests {
                 System.out.println("testFindKeyWordsInPhrase 1 failed.");
                 System.out.println(Arrays.toString(matches));
             }
-        }
+        } */
 
         {
             // 2.
@@ -408,8 +408,21 @@ public class ElizaTests {
                 System.out.println(Arrays.toString(matches));
             }
         }
+        { //6.
+        ArrayList<String> keywords = new ArrayList<String>();
+        keywords.add("i");
+        keywords.add("you");
+        String[] sentence = {"i", "wish", "to", "believe", "you"};
+        String[] matches = Eliza.findKeyWordsInPhrase(keywords, sentence);
+        //System.out.print(Arrays.toString(matches));
+        if (matches == null || matches.length != 3 || !matches[0].equals("") || !matches[1].equals("wish to believe") || !matches[2].equals("")) {
+            error = true;
+            System.out.println("testFindKeyWordsInPhrase 5 failed.");
+            System.out.println(Arrays.toString(matches));
+        } 
+    }
+        
 
-        // additional tests?
 
         if (error) {
             System.err.println("testFindKeyWordsInPhrase failed");
@@ -785,7 +798,7 @@ public class ElizaTests {
         Random randGen = new Random(923);
         ArrayList<ArrayList<String>> responseTable =
             Eliza.loadResponseTable("Eliza" + Config.RESPONSE_FILE_EXTENSION);
-
+        //System.out.print(responseTable);
         numPassed += checkResponse("I like computers.",
             "What do you think machines have to do with your problem?", randGen, responseTable);
 
