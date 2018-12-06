@@ -59,7 +59,7 @@ public class Eliza {
      */
     public static void main(String[] args) {
         
-    	
+    	ArrayList<String> dialog = new ArrayList<String>();
         //Milestone 2
         //create a scanner for reading user input and a random number
         //generator with Config.SEED as the seed
@@ -89,25 +89,29 @@ public class Eliza {
         //Milestone 2
         //name prompt
         System.out.println("Hi I'm Eliza, what is your name?");
+        dialog.add("Hi I'm Eliza, what is your name?");
         String userName =scnr.nextLine();
-        
+        dialog.add(userName);
         //Milestone 2
         //welcome prompt
         System.out.println("Nice to meet you " + userName + ". What is on your mind?");
-        
+        dialog.add("Nice to meet you " + userName + ". What is on your mind?");
         //Milestone 2
         //begin conversation loop
         while (scnr.hasNextLine()) {
             //Milestone 2
             //obtain user input
             String userInput = scnr.nextLine();
-
+            dialog.add(userInput);
             	
             
             
             //Milestone 2
             //prepareInput
             String [] inputArray = prepareInput(userInput);
+            if (inputArray == null) {
+            	break;
+            }
             	//System.out.println(Arrays.toString(inputArray));
             ArrayList<String> inputArrayList = new ArrayList<String>();
             ArrayList<ArrayList<String>> responseTable = loadResponseTable("Eliza.rsp");
@@ -122,18 +126,32 @@ public class Eliza {
                     String response = prepareResponse(inputArray, rand, responseTable);
                     //System.out.println(responseTable.get(130));
                     System.out.println(response);
-                }
+                    dialog.add(response);
+                } }
 
             //Milestone 2
             //end loop if quit word
-                else {
+              
                     System.out.println("Goodbye " + userName + ".");
-                    break; }
+                    dialog.add("Goodbye " + userName + ".");
+                     
 
         //Milestone 2
         //ending prompt
         
         //Milestone 3
+                System.out.print("Would you like to have a record of our conversation (y/n): ");
+                if (scnr.next().equals("y")) {
+                	System.out.println("Enter filename: ");
+                	try {
+                    	String fileName = scnr.nextLine();
+						saveDialog(dialog, fileName);
+						System.out.println("Thanks again for talking! Our conversation is saved in: " + fileName); 
+					} catch (IOException e) {
+						System.out.println("Error opening file");
+					} 
+                	
+                }
         //Save all conversation (user and system responses) starting
         //with this program saying "Hi I'm..." and concludes with
         //"Goodbye <name>.".
@@ -146,7 +164,7 @@ public class Eliza {
         //  "Unable to save conversation to: " <name of file> 
         //Repeat the code prompting the user if they want to save the dialog.
 
-        }  
+        
     }
     
 
